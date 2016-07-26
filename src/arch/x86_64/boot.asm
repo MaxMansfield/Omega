@@ -168,6 +168,7 @@ gdt64:
 .pointer:
   dw $ - gdt64 -1
   dq gdt64
+
 .bss:
 align 4096                  ; Align and reserve for paging
 PML4_table:                   ; Page-Map Level-4 Table (PML4)
