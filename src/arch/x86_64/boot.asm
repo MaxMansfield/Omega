@@ -11,33 +11,23 @@ start:
   ; Position the stack pointer in .bss
   mov esp, stack_top
 
-  call  initialize
+  call check_multiboot
+  call check_cpuid
+  call check_long_mode
+
 
   ; Print OK in the VGA buffer
   mov dword [0xb8000], 0x2f4b2f4f
   hlt
 
 
-initialize:
-  call boot_check
-
-boot_check:
-  call check_multiboot
-  call check_cpuid
-  call check_long_mode
-
-
-;Verify multiboot by looking for the magic number in eax
-check_multiboot:
-  cmp eax, 0x36d76289
-  jne .no_multiboot
-  ret
-
-;Respond to a failure to verify a multiboot boot loader
-no_multiboot:
-  mov al, "1"
-  jmp error
-  ret
+  check_multiboot:
+      cmp eax, 0x36d76289
+      jne .no_multiboot
+      ret
+  .no_multiboot:
+      mov al, "1"
+      jmp error
 
 ; Check if CPUID is supported by attempting to flip the ID bit (bit 21)
 ; in the FLAGS register. If we can flip it, CPUID is available.
@@ -90,7 +80,7 @@ check_long_mode:
     jz .no_long_mode       ; If it's not set, there is no long mode
     ret
 .no_long_mode:
-    mov al, "2"
+    mov al, "3"
     jmp error
 
 ; Prints an error (ERR: al) in white text with a red background
