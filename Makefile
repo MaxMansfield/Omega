@@ -60,8 +60,7 @@ iso: $(iso)
 
 # add the name and version to the readme
 readme:
-	@sed -i "1s/.*/# ${name}/" $(readme)
-	@sed -i "2s/.*/#### v${version}/" $(readme)
+	@sed -i "2s/.*/#### Version: ${name} (v${version})/" $(readme)
 
 $(grub_dir):
 		mkdir -p $(grub_dir)
