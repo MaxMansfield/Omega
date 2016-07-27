@@ -1,5 +1,5 @@
 name ?= omega
-version ?= 0.1.1
+version ?= 0.1.2
 arch ?= x86_64
 build ?= debug
 target ?= $(arch)-unknown-linux-gnu
@@ -14,8 +14,6 @@ readme := README.md
 
 rust_os := target/$(target)/$(build)/lib$(name).a
 cargo_flags := build -j $(shell nproc)  --target=$(target)
-
-
 
 # NASM and assembly
 assembly_source_files := $(wildcard src/arch/$(arch)/*.asm)

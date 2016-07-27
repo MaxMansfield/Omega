@@ -1,5 +1,5 @@
 # Apollo
-#### Version: omega (v0.1.1)
+#### Version: omega (v0.1.2)
 <br/>
 <hr/>
 Apollo is a small x86_64 kernel written in rust
