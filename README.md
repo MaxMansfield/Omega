@@ -1,5 +1,5 @@
 # Apollo
-#### Version: omega (v0.1.0)
+#### Version: omega (v0.1.1)
 <br/>
 <br/>
 <hr/>
