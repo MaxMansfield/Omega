@@ -10,16 +10,16 @@ Apollo is a small x86 kernel written in rust and assembly
 # Build Dependencies
 
 Below is a list of things you need to run the kernel and some instructions.
-If you want to know the kernel dependencies please look at the `Vagrantfile`
-and `Cargo.toml` for now since they change so frequently at this stage
+If you want to know the kernel dependencies please look at the [Vagrantfile](https://github.com/MaxMansfield/apollo/blob/master/Vagrantfile)
+and [Cargo.toml](https://github.com/MaxMansfield/apollo/blob/master/Cargo.toml) for now since they change so frequently at this stage
 in development.
 
 ##### All
-* Vagrant
-* VirtualBox
+* [Vagrant](https://www.vagrantup.com/)
+* [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 
 ##### OS X
-* XQuartz
+* [XQuartz](https://www.xquartz.org/)
 
 ##### Windows
 * [Read This](https://help.ubuntu.com/community/SwitchingToUbuntu/FromWindows)
@@ -51,10 +51,10 @@ You can also give different parameters to the build system
 # Build and Run
 #### 1. Install `vagrant` and `virtualbox` (as well as `xquartz` if you are on OS X)
 ```sh
-  git clone https://github.com/MaxMansfield/omega.git     # Get the kernel
-  cd omega                                                # Go to the kernel
-  vagrant up --provider=virtualBox                        # Get Dev Environment
-  vagrant ssh                                             # Go to Dev Environment
+  git clone https://github.com/MaxMansfield/apollo.git     # Get the kernel
+  cd apollo                                                # Go to the kernel
+  vagrant up --provider=virtualBox                         # Get Dev Environment
+  vagrant ssh                                              # Go to Dev Environment
 ```
 #### 2. Now that you are `ssh`'d into the system navigate to the share folder
 ```sh
@@ -77,14 +77,13 @@ You can also give different parameters to the build system
 
 # Without `Vagrant`
 If you would like to build this without `vagrant` then take a look at the
-the bottom of the `Vagrantfile` for the `sh` instructions used to install
-dependencies and set `rustup` to a default `nightly` build.
+the bottom of the [Vagrantfile](https://github.com/MaxMansfield/apollo/blob/master/Vagrantfile) for the `sh` instructions used to install dependencies and set `rustup` to a default `nightly` build.
 
 <br/>
 <br/>
 
 # License (MIT)
-##### See the file name `LICENSE` at the root directory of this repository.
+##### See the file named [LICENSE](https://github.com/MaxMansfield/apollo/blob/master/LICENSE) at the root directory of this repository.
 
 <br/>
 <br/>
