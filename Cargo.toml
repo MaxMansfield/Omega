@@ -1,6 +1,6 @@
 [package]                     # < DO NOT CHANGE lines 1,2 or 3 to any other line
 name = "omega"
-version = "0.1.2"
+version = "0.2.0"
 # The name and version are edited in by the Makefile & because it relies on them
 # being at line 2 or 3 it is imperitive that no lines are added or removed
 # You can change anything below this comment. It is not used by the Makefile,
