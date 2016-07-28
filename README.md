@@ -1,11 +1,11 @@
 # Apollo
-#### Version: omega (v0.1.0)
-<br/>
+#### Version: omega (v0.2.0)
 <br/>
 <hr/>
-Apollo is a small x86 kernel written in rust and assembly
+Apollo is a small x86_64 kernel written in rust
 <hr/>
 <br/>
+
 
 # Build Dependencies
 
@@ -82,12 +82,13 @@ the bottom of the [Vagrantfile](https://github.com/MaxMansfield/apollo/blob/mast
 <br/>
 <br/>
 
+# Contributors and Resources
+##### 1. **Philipp Oppermann** for [his amazing site](http://os.phil-opp.com/)
+##### 2. **intermezzOS** for [their thourough walkthrough](http://intermezzos.github.io/)
+##### 2. **Ashley Williams** and [her x86 repo](https://github.com/ashleygwilliams/x86-kernel) for showing me Vagrant
+
 # License (MIT)
 ##### See the file named [LICENSE](https://github.com/MaxMansfield/apollo/blob/master/LICENSE) at the root directory of this repository.
 
 <br/>
 <br/>
-
-# Contributors
-##### 1. Thank you to **Philipp Oppermann** for [his amazing site](http://os.phil-opp.com/) from which this kernel was made.
-##### 2. Thank you to **Ashley Williams** and [her x86 repo](https://github.com/ashleygwilliams/x86-kernel) for showing me Vagrant

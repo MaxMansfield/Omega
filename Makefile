@@ -1,5 +1,5 @@
 name ?= omega
-version ?= 0.1.0
+version ?= 0.2.0
 arch ?= x86_64
 build ?= debug
 target ?= $(arch)-unknown-linux-gnu
@@ -14,10 +14,6 @@ readme := README.md
 
 rust_os := target/$(target)/$(build)/lib$(name).a
 cargo_flags := build -j $(shell nproc)  --target=$(target)
-
-ifeq ($(build), release)
-	cargo_flags += --$(build)
-endif
 
 # NASM and assembly
 assembly_source_files := $(wildcard src/arch/$(arch)/*.asm)
@@ -39,6 +35,18 @@ endef
 iso := build/arch/$(arch)/$(kname).iso
 
 
+# QEMU
+qemu := qemu-system-$(arch)
+qemu_flags := -cdrom $(iso)
+
+
+# Assign Flags
+ifeq ($(build), release)
+	cargo_flags += --$(build)
+else
+	qemu_flags += -d int
+endif
+
 .PHONY: all clean run iso $(cargo)
 
 all: $(kernel)
@@ -53,7 +61,7 @@ clean:
 
 run: $(iso)
 	@printf "\nRunning...\n"
-	@qemu-system-$(arch) -cdrom $(iso)
+	@$(qemu) $(qemu_flags)
 
 iso: $(iso)
 	@echo "Making ISO..."
@@ -68,7 +76,7 @@ $(grub_dir):
 $(grub_cfg): $(grub_dir)
 	@printf "set timeout=10\n\
 	set default=0\n\
-	menuentry '%s v%s%s (%s)' {\n\t\
+	menuentry 'Apollo %s v%s%s (%s)' {\n\t\
 	multiboot2 /boot/%s.bin\n\tboot\n\
 	}" $(name)  ${version} $(shell echo ${build} | head -c 1) ${arch} $(kname) > $(grub_cfg)
 

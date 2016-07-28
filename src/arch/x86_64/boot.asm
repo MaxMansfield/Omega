@@ -1,8 +1,11 @@
 ;; Errors
 ;;  1 - No MultiBoot
 ;;  2 - No CPUID
+;;  3 - No Long mode
+;;  4 - No SSE
+
 global start    ; Point of Entry for kernel
-extern init_lm
+extern init
 
 section .text
 bits 32
@@ -17,9 +20,13 @@ start:
   call check_cpuid
   call check_long_mode
 
+
   ; Init Kernel
   call init_page_tables
   call init_paging
+
+  ; Enable SSE
+  call init_SSE
 
   ; load the 64bit Global Descriptor Table
   lgdt [gdt64.pointer]
@@ -31,7 +38,8 @@ start:
   mov es, ax
 
   ; set cs register and initialize long mode
-  jmp gdt64.code:init_lm
+  jmp gdt64.code:init
+
 
 
 
@@ -80,6 +88,7 @@ check_cpuid:
   mov al, "2"
   jmp error
 
+
 ; Check for LM and error if not
 check_long_mode:
     ; test if extended processor info in available
@@ -96,6 +105,28 @@ check_long_mode:
     ret
 .no_long_mode:
     mov al, "3"
+    jmp error
+
+; Check for SSE and enable it. If it's not supported throw error "a".
+init_SSE:
+    ; check for SSE
+    mov eax, 0x1
+    cpuid
+    test edx, 1<<25
+    jz .no_SSE
+
+    ; enable SSE
+    mov eax, cr0
+    and ax, 0xFFFB      ; clear coprocessor emulation CR0.EM
+    or ax, 0x2          ; set coprocessor monitoring  CR0.MP
+    mov cr0, eax
+    mov eax, cr4
+    or ax, 3 << 9       ; set CR4.OSFXSR and CR4.OSXMMEXCPT at the same time
+    mov cr4, eax
+
+    ret
+.no_SSE:
+    mov al, "4"
     jmp error
 
 

@@ -1,13 +1,18 @@
 [package]                     # < DO NOT CHANGE lines 1,2 or 3 to any other line
 name = "omega"
-version = "0.1.0"
+version = "0.2.0"
 # The name and version are edited in by the Makefile & because it relies on them
 # being at line 2 or 3 it is imperitive that no lines are added or removed
 # You can change anything below this comment. It is not used by the Makefile,
+description = "A very simple x86_64 kernel"
+repository = "https://github.com/MaxMansfield/apollo.git"
+license-file = "LICENSE"
+readme = "README.md"
 authors = ["Max Mansfield <max.m.mansfield@gmail.com>"]
 
 [dependencies]
 rlibc = "0.1.4"
+spin = "0.3.4"  #Use for temp Mutex 
 
 [lib]
 crate-type = ["staticlib"]
