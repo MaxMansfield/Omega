@@ -4,17 +4,23 @@
 #![feature(unique)]
 #![no_std]
 extern crate rlibc;
+extern crate spin;
+
 
 ///The vgab module controls printing to the VGA buffer_ptr
+#[macro_use]
 mod vgab;
-use core::fmt::Write;
 
 #[no_mangle]
 pub extern fn kmain() {
-    // ATTENTION: we have a very small stack and no guard page
+    vgab::clear_screen();
+    kprintln!("VGA: Buffer Ready.");
 
-    vgab::write_shit();
-    loop {}
+    let mut i: i64 = 0;
+    loop {
+        kprintln!("Kernel Running! - {}", i);
+        i = i + 1;
+    }
 }
 
 #[lang = "eh_personality"] extern fn eh_personality() {}

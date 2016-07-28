@@ -12,6 +12,7 @@ authors = ["Max Mansfield <max.m.mansfield@gmail.com>"]
 
 [dependencies]
 rlibc = "0.1.4"
+spin = "0.3.4"  #Use for temp Mutex 
 
 [lib]
 crate-type = ["staticlib"]

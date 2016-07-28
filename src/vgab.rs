@@ -1,6 +1,19 @@
 //! The vgab.rs file controls printing to the VGA buffer in color
 use core::ptr::Unique;
-use core::fmt::Write;
+use spin::Mutex;
+
+macro_rules! kprintln {
+    ($fmt:expr) => (kprint!(concat!($fmt, "\n")));
+    ($fmt:expr, $($arg:tt)*) => (kprint!(concat!($fmt, "\n"), $($arg)*));
+}
+
+macro_rules! kprint {
+    ($($arg:tt)*) => ({
+        use core::fmt::Write;
+        let mut writer = $crate::vgab::WRITER.lock();
+        writer.write_fmt(format_args!($($arg)*)).unwrap();
+    });
+}
 
 
 const BUFFER_HEIGHT: usize = 25;
@@ -114,26 +127,29 @@ impl Writer {
 
         self.buffer().chars[row] = [blank; BUFFER_WIDTH];
     }
+
+    pub fn clear_screen() {
+        for _ in 0..BUFFER_HEIGHT {
+            kprintln!("");
+        }
+    }
 }
 
 impl ::core::fmt::Write for Writer {
     fn write_str(&mut self, s: &str) -> ::core::fmt::Result {
         for byte in s.bytes() {
-          self.byte(byte)
+            self.byte(byte)
         }
         Ok(())
     }
 }
 
-pub fn write_shit() {
-    // in the `print_something` function
-    use core::fmt::Write;
-    let mut writer = Writer {
-        colpos: 0,
-        color_code: ColorCode::new(Color::LightBlue, Color::Black),
-        buffer: unsafe{Unique::new(0xb8000 as *mut _)},
-    };
-    writer.byte(b'H');
-    writer.write_str("ello! ");
-    write!(writer, "The numbers are {} and {}", 42, 1.0/3.0);
+pub static WRITER: Mutex<Writer> = Mutex::new(Writer {
+    colpos: 0,
+    color_code: ColorCode::new(Color::LightGreen, Color::Black),
+    buffer: unsafe { Unique::new(0xb8000 as *mut _) },
+});
+
+pub fn clear_screen() {
+    Writer::clear_screen();
 }
